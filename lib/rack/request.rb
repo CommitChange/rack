@@ -305,13 +305,12 @@ module Rack
       #   precede those with less specific.  Ordering with respect to other
       #   attributes (e.g., Domain) is unspecified.
       if string
-        result =  string.split(/[;,] */n).each_with_object({}) do |cookie, cookies|
+        result =  string.split(/[;,] */n).each do |cookie|
+          
           next if cookie.empty?
           key, value = cookie.split('=', 2)
-          cookies[key] = (unescape(value) rescue value) unless cookies.key?(key)
+          hash[key] = (unescape(value) rescue value) unless hash.key?(key)
         end
-
-        result.each{|k,v| hash[k] = v } # We can't reassign @env["rack.request.cookie_hash"]
       end
 
       @env["rack.request.cookie_string"] = string
