@@ -10,12 +10,11 @@ jobs:
       runs-on: ubuntu-20.04
       steps:
         - uses: actions/checkout@v2
-        - run: sudo apt-get install libfcgi-dev lighttpd
         - uses: ruby/setup-ruby@v1
           with:
             ruby-version: 2.3.8 # this is the test version for this version of rack
             bundler-cache: true
-        - run: bundle add minitest --version "4.7"
+        - run: bundle add minitest --version "5.0.0"
         - run: bundle add minitest-global_expectations
         - run: gem list --local
         - run: bundle exec rake test
