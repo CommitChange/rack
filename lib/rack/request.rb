@@ -304,15 +304,8 @@ module Rack
       #   the Cookie header such that those with more specific Path attributes
       #   precede those with less specific.  Ordering with respect to other
       #   attributes (e.g., Domain) is unspecified.
-      if string
-        result =  string.split(/[;,] */n).each do |cookie|
-          
-          next if cookie.empty?
-          key, value = cookie.split('=', 2)
-          hash[key] = (unescape(value) rescue value) unless hash.key?(key)
-        end
-      end
-
+      cookies = Utils.parse_cookies_header(string)
+      cookies.each { |k,v| hash[k] = Array === v ? v.first : v }
       @env["rack.request.cookie_string"] = string
       hash
     end

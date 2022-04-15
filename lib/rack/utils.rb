@@ -108,6 +108,13 @@ module Rack
     end
     module_function :parse_query
 
+    module_function def parse_cookies_header(header)
+      return {} unless header
+      header.split(/[;] */n).each_with_object({}) do |cookie, cookies|
+      next if cookie.empty?
+      key, value = cookie.split('=', 2)
+      cookies[key] = (unescape(value) rescue value) unless cookies.key?(key) 
+    end
     # parse_nested_query expands a query string into structural types. Supported
     # types are Arrays, Hashes and basic value types. It is possible to supply
     # query strings with parameters of conflicting types, in this case a
