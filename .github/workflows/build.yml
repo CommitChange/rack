@@ -14,7 +14,7 @@ jobs:
           with:
             ruby-version: 2.3.8 # this is the test version for this version of rack
             bundler-cache: true
-        - run: bundle add minitest --version "5.0.0"
-        - run: bundle add minitest-global_expectations
+        - run: bundle add minitest --version "4.7"
+        - run: bundle add minitest-global_expectations --version "1"
         - run: gem list --local
         - run: bundle exec rake test
