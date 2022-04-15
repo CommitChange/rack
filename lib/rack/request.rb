@@ -304,13 +304,15 @@ module Rack
       #   the Cookie header such that those with more specific Path attributes
       #   precede those with less specific.  Ordering with respect to other
       #   attributes (e.g., Domain) is unspecified.
-      result =  string.split(/[;,] */n).each_with_object({}) do |cookie, cookies|
-        next if cookie.empty?
-        key, value = cookie.split('=', 2)
-        cookies[key] = (unescape(value) rescue value) unless cookies.key?(key)
-      end
+      if string
+        result =  string.split(/[;,] */n).each_with_object({}) do |cookie, cookies|
+          next if cookie.empty?
+          key, value = cookie.split('=', 2)
+          cookies[key] = (unescape(value) rescue value) unless cookies.key?(key)
+        end
 
-      result.each{|k,v| hash[k] = v } # We can't reassign @env["rack.request.cookie_hash"]
+        result.each{|k,v| hash[k] = v } # We can't reassign @env["rack.request.cookie_hash"]
+      end
 
       @env["rack.request.cookie_string"] = string
       hash
