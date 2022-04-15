@@ -1,0 +1,19 @@
+name: Main build
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize]
+concurrency: 
+  group: build--${{ github.head_ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 2.3.8 # this is the test version for this version of rack
+            bundler-cache: true
+        - run: bundle add minitest --version "4.7"
+        - run: gem list --local
+        - run: bundle exec rake test
