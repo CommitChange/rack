@@ -439,6 +439,12 @@ describe Rack::Request do
     req.cookies.should.equal({})
   end
 
+  should "parse cookies for CVE 2020-8184" do
+    req = Rack::Request.new \
+      Rack::MockRequest.env_for("", "HTTP_COOKIE" => "%66oo=baz;foo=bar")
+    req.cookies.should.equal "%66oo" => "baz", "foo" => "bar"
+  end
+
   should "always return the same hash object" do
     req = Rack::Request.new \
       Rack::MockRequest.env_for("", "HTTP_COOKIE" => "foo=bar;quux=h&m")
