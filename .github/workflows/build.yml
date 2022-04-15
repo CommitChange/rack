@@ -15,5 +15,5 @@ jobs:
           with:
             ruby-version: 2.3.8 # this is the test version for this version of rack
             bundler-cache: true
-        - run: bundle add minitest --version "~>5.11 <5.12"
+        - run: bundle add minitest --version "5.11"
         - run: bundle exec rake ci
