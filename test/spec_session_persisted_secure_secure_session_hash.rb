@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'minitest/global_expectations/autorun'
+#require 'minitest/global_expectations/autorun'
 require 'rack/session/abstract/id'
 
 describe Rack::Session::Abstract::PersistedSecure::SecureSessionHash do
