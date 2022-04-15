@@ -16,6 +16,5 @@ jobs:
             ruby-version: 2.3.8 # this is the test version for this version of rack
             bundler-cache: true
         - run: |
-            gem update --system 2.7.4
             gem install bundler
         - run: bundle exec rake ci
