@@ -12,10 +12,10 @@ module Rack
     MULTIPART = %r|\Amultipart/.*boundary=\"?([^\";,]+)\"?|ni
     TOKEN = /[^\s()<>,;:\\"\/\[\]?=]+/
     CONDISP = /Content-Disposition:\s*#{TOKEN}\s*/i
+    VALUE = /"(?:\\"|[^"])*"|#{TOKEN}/
+    BROKEN = /^#{CONDISP}.*;\s*filename=(#{VALUE})/i
     DISPPARM = /;\s*(#{TOKEN})=("(?:\\"|[^"])*"|#{TOKEN})/
     RFC2183 = /^#{CONDISP}(#{DISPPARM})+$/i
-    BROKEN_QUOTED = /^#{CONDISP}.*;\sfilename="(.*?)"(?:\s*$|\s*;\s*#{TOKEN}=)/i
-    BROKEN_UNQUOTED = /^#{CONDISP}.*;\sfilename=(#{TOKEN})/i
     MULTIPART_CONTENT_TYPE = /Content-Type: (.*)#{EOL}/ni
     MULTIPART_CONTENT_DISPOSITION = /Content-Disposition:.*\s+name="?([^\";]*)"?/ni
     MULTIPART_CONTENT_ID = /Content-ID:\s*([^#{EOL}]*)/ni
